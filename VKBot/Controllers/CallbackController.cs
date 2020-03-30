@@ -39,12 +39,13 @@ namespace VKBot.Controllers
 
                         if(msg.Text.ToLower() == "да")
                         {
-                            _vkApi.Messages.Send(new MessagesSendParams
-                            {
-                                RandomId = new DateTime().Millisecond,
-                                PeerId = msg.PeerId.Value,
-                                Message = "Ну тогда полезай на жопу "
-                            });
+                            _vkApi.Messages.SetActivity("dwe", VkNet.Enums.SafetyEnums.MessageActivityType.Typing, 2000000000 - 193439141, 193439141);
+                            //_vkApi.Messages.Send(new MessagesSendParams
+                            //{
+                            //    RandomId = new DateTime().Millisecond,
+                            //    PeerId = msg.PeerId.Value,
+                            //    Message = "Ну тогда полезай на жопу "
+                            //});
                         }
                         break;
                     }
