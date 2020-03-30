@@ -6,6 +6,7 @@ using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
 using VkNet.Utils;
+using System.Threading;
 
 namespace VKBot.Controllers
 {
@@ -44,13 +45,14 @@ namespace VKBot.Controllers
                         if(msg.Text.ToLower() == "да")
                         {
                             _vkApi.Messages.SetActivity("193439141", MessageActivityType.Typing, msg.PeerId.Value);
-                            
-                            //_vkApi.Messages.Send(new MessagesSendParams
-                            //{
-                            //    RandomId = new DateTime().Millisecond,
-                            //    PeerId = msg.PeerId.Value,
-                            //    Message = "Ну тогда полезай на жопу "
-                            //});
+                            Thread.Sleep(10000);
+
+                            _vkApi.Messages.Send(new MessagesSendParams
+                            {
+                                RandomId = new DateTime().Millisecond,
+                                PeerId = msg.PeerId.Value,
+                                Message = updates.Type.ToString()+updates.GroupId.ToString()
+                            });
                         }
                         break;
                     }
