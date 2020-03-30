@@ -45,7 +45,7 @@ namespace VKBot.Controllers
                         if(msg.Text.ToLower() == "да")
                         {
                             _vkApi.Messages.SetActivity("193439141", MessageActivityType.Typing, msg.PeerId.Value);
-                            Thread.Sleep(10000);
+                            
 
                             _vkApi.Messages.Send(new MessagesSendParams
                             {
