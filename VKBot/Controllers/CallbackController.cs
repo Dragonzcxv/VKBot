@@ -36,10 +36,7 @@ namespace VKBot.Controllers
                     return Ok(_configuration["Config:Confirmation"]);
                 case "message_new":
                     {
-                        // Десериализация
-                        Console.WriteLine(updates.Type);
-                        Console.WriteLine(updates.Object);
-                        Console.WriteLine(updates.GroupId);
+                        // Десериализаци
                         var msg = Message.FromJson(new VkResponse(updates.Object));
 
                         if(msg.Text.ToLower() == "да")
@@ -51,7 +48,7 @@ namespace VKBot.Controllers
                             {
                                 RandomId = new DateTime().Millisecond,
                                 PeerId = msg.PeerId.Value,
-                                Message = updates.Type.ToString()+updates.GroupId.ToString()
+                                Message = updates.Object.ToString()
                             });
                         }
                         break;
