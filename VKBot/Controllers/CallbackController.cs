@@ -36,11 +36,15 @@ namespace VKBot.Controllers
                 case "message_new":
                     {
                         // Десериализация
+                        Console.WriteLine(updates.Type);
+                        Console.WriteLine(updates.Object);
+                        Console.WriteLine(updates.GroupId);
                         var msg = Message.FromJson(new VkResponse(updates.Object));
 
                         if(msg.Text.ToLower() == "да")
                         {
                             _vkApi.Messages.SetActivity("193439141", MessageActivityType.Typing, msg.PeerId.Value);
+                            
                             //_vkApi.Messages.Send(new MessagesSendParams
                             //{
                             //    RandomId = new DateTime().Millisecond,
