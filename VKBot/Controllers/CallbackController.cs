@@ -43,7 +43,7 @@ namespace VKBot.Controllers
                             {
                                 RandomId = new DateTime().Millisecond,
                                 PeerId = msg.PeerId.Value,
-                                Message = "Ну тогда полезай на ножик"
+                                Message = "Ну тогда полезай на "
                             });
                         }
                         break;
