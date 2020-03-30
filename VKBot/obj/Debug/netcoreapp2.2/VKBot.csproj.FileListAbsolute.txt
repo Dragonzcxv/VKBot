@@ -1,0 +1,16 @@
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\appsettings.Development.json
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\appsettings.json
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.deps.json
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.runtimeconfig.json
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.runtimeconfig.dev.json
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.dll
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.csprojAssemblyReference.cache
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.RazorAssemblyInfo.cache
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.RazorAssemblyInfo.cs
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.AssemblyInfoInputs.cache
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.AssemblyInfo.cs
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.RazorTargetAssemblyInfo.cache
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.pdb
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.dll
+C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.pdb
