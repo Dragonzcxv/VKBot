@@ -43,22 +43,19 @@ namespace VKBot.Controllers
             {
                 case "confirmation":
                     return Ok(_configuration["Config:Confirmation"]);
-                //case "group_join":
-                //    {
-                //        //SendTextMessage(msg.PeerId.Value, "случился бан");
-                //        keyboard = KeyboardBuild();
-                //        _vkApi.Messages.Send(new MessagesSendParams
-                //        {
-                //            RandomId = new DateTime().Millisecond,
-                //            PeerId = msg.PeerId.Value,
-                //            Message = "Ты посмотри кто к нам колёса катит",
-                //            Keyboard = keyboard
-                //        });
-                //        break;
-                //    }
-                default:
-                    SendTextMessage(msg.PeerId.Value, updates.Type+" fef");
-                    break;
+                case "group_join":
+                    {
+                        //SendTextMessage(msg.PeerId.Value, "случился бан");
+                        keyboard = KeyboardBuild();
+                        _vkApi.Messages.Send(new MessagesSendParams
+                        {
+                            RandomId = new DateTime().Millisecond,
+                            PeerId = msg.UserId.Value,
+                            Message = "Ты посмотри кто к нам колёса катит",
+                            Keyboard = keyboard
+                        });
+                        break;
+                    }
             }
             return Ok("ok");
         }
