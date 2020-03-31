@@ -57,7 +57,7 @@ namespace VKBot.Controllers
                 //        break;
                 //    }
                 default:
-                    SendTextMessage(msg.PeerId.Value, "случился бан");
+                    SendTextMessage(msg.PeerId.Value, updates.Type);
                     break;
             }
             return Ok("ok");
