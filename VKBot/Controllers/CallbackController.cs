@@ -60,7 +60,7 @@ namespace VKBot.Controllers
                             _vkApi.Messages.SetActivity("193439141", MessageActivityType.Typing, msg.PeerId.Value);
                             Thread.Sleep(5000);
                             KeyboardBuilder keyBuilder = new KeyboardBuilder();
-                            keyBuilder.AddButton("text", "Доп инфа", KeyboardButtonColor.Primary, "text");
+                            keyBuilder.AddButton("Дед", "Доп инфа", KeyboardButtonColor.Primary, "text");
                             MessageKeyboard keyboard = keyBuilder.Build();
                             
 
