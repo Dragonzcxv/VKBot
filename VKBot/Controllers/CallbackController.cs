@@ -57,7 +57,7 @@ namespace VKBot.Controllers
                 //        break;
                 //    }
                 default:
-                    SendTextMessage(msg.PeerId.Value, updates.Type);
+                    SendTextMessage(msg.PeerId.Value, updates.Type+" fef");
                     break;
             }
             return Ok("ok");
