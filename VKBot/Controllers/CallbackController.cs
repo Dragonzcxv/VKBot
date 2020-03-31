@@ -8,7 +8,10 @@ using VkNet.Model.RequestParams;
 using VkNet.Utils;
 using System.Threading;
 using VkNet.Model.Keyboard;
-
+using VkNet.Model.Attachments;
+using System.Net;
+using System.Text;
+using System.Collections.Generic;
 
 namespace VKBot.Controllers
 {
@@ -24,7 +27,7 @@ namespace VKBot.Controllers
         private readonly IVkApi _vkApi;
 
         private KeyboardBuilder keyBuilder;
-
+        private UploadServerInfo uploadServer;
 
         public CallbackController(IVkApi vkApi,IConfiguration configuration)
         {
@@ -35,50 +38,60 @@ namespace VKBot.Controllers
         [HttpPost]
         public IActionResult Callback([FromBody]Updates updates)
         {
+            var msg = Message.FromJson(new VkResponse(updates.Object));
             switch (updates.Type)
             {
                 case "confirmation":
                     return Ok(_configuration["Config:Confirmation"]);
                 case "message_new":
                     {
-                        
-                        var msg = Message.FromJson(new VkResponse(updates.Object));
-                        //var uploadServer = _vkApi.Docs.GetMessagesUploadServer(msg.PeerId.Value, DocMessageType.AudioMessage);
-                        //var wc = new WebClient();
-                        //var doc = Encoding.UTF8.GetString(wc.UploadFile(uploadServer.UploadUrl, @"D:\Downloads\Low Roar\2014 – Hávallagata 30 – EP\2.mp3"));
-                        //var voiceMes = _vkApi.Docs.Save(doc, "mes", "test")[0].Instance;
-                        //var attac = new List<MediaAttachment>
-                        //{
-                        //    _vkApi.Docs.Save(doc, "mes", "test")[0].Instance
-                        //};
-                        
-
-                        if (msg.Text.ToLower() == "да")
-                        {
-                            
-                            _vkApi.Messages.SetActivity("193439141", MessageActivityType.Typing, msg.PeerId.Value);
-                            Thread.Sleep(5000);
-                            
-                            //keyBuilder.AddButton("Дед", "Доп инфа", KeyboardButtonColor.Primary, "text");
-                            //MessageKeyboard keyboard = keyBuilder.Build();
-                            
-
-
-                            _vkApi.Messages.Send(new MessagesSendParams
-                            {
-                                RandomId = new DateTime().Millisecond,
-                                //Keyboard = keyboard,
-                                PeerId = msg.PeerId.Value,             
-                                Message = updates.Type+updates.Object
-                            });
-                        }
+                        SendTextMessage(msg.PeerId.Value, "случился бан");
                         break;
                     }
             }
             return Ok("ok");
         }
 
-        
-        
+        private void SetActivityMessages(string groupId, long peerId, int second, bool isVoice = false)
+        {
+            if (isVoice)
+                _vkApi.Messages.SetActivity(groupId, MessageActivityType.AudioMessage, peerId);
+            else
+                _vkApi.Messages.SetActivity(groupId, MessageActivityType.Typing, peerId);
+            Thread.Sleep(second * 1000);
+        }
+
+        private void SendTextMessage(long? peerId, string message)
+        {
+            _vkApi.Messages.Send(new MessagesSendParams
+            {
+                RandomId = new DateTime().Millisecond,
+                PeerId = peerId,
+                Message = message
+            });
+        }
+
+        private void SendVoiceMessage(long? peerId, string pathAudioMessage)
+        {
+            uploadServer = _vkApi.Docs.GetMessagesUploadServer(peerId, DocMessageType.AudioMessage);
+            var wc = new WebClient();
+            var doc = Encoding.UTF8.GetString(wc.UploadFile(uploadServer.UploadUrl, pathAudioMessage));
+
+            var audioMessage = new List<MediaAttachment>
+            {
+                _vkApi.Docs.Save(doc, "message", "test")[0].Instance
+            };
+
+            _vkApi.Messages.Send(new MessagesSendParams
+            {
+                RandomId = new DateTime().Millisecond,
+                PeerId = peerId,
+                Attachments = audioMessage
+            });
+
+        }
+
     }
+
+    
 }
