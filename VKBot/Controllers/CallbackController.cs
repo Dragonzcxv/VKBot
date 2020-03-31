@@ -70,7 +70,7 @@ namespace VKBot.Controllers
                                 RandomId = new DateTime().Millisecond,
                                 Keyboard = keyboard,
                                 PeerId = msg.PeerId.Value,             
-                                Message = updates.Type
+                                Message = updates.Type+updates.Object
                             });
                         }
                         break;
