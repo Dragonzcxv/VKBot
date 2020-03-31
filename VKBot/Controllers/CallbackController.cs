@@ -26,7 +26,7 @@ namespace VKBot.Controllers
 
         private readonly IVkApi _vkApi;
 
-        private KeyboardBuilder keyBuilder;
+        private MessageKeyboard keyboard;
         private UploadServerInfo uploadServer;
 
         public CallbackController(IVkApi vkApi,IConfiguration configuration)
@@ -43,9 +43,17 @@ namespace VKBot.Controllers
             {
                 case "confirmation":
                     return Ok(_configuration["Config:Confirmation"]);
-                case "message_new":
+                case "group_join":
                     {
-                        SendTextMessage(msg.PeerId.Value, "случился бан");
+                        //SendTextMessage(msg.PeerId.Value, "случился бан");
+                        keyboard = KeyboardBuild();
+                        _vkApi.Messages.Send(new MessagesSendParams
+                        {
+                            RandomId = new DateTime().Millisecond,
+                            PeerId = msg.PeerId.Value,
+                            Message = "Ты посмотри кто к нам колёса катит",
+                            Keyboard = keyboard
+                        });
                         break;
                     }
             }
@@ -90,6 +98,18 @@ namespace VKBot.Controllers
             });
 
         }
+
+        private MessageKeyboard KeyboardBuild()
+        {
+            KeyboardBuilder builder = new KeyboardBuilder();
+            builder.Clear();
+            builder.AddButton("Быкman, какая погода на сегодня?", "extra", KeyboardButtonColor.Primary);
+            builder.AddButton("Быкman, нужно трек качнуть из моих аудио", "extra", KeyboardButtonColor.Positive);
+            builder.AddButton("Быкman, мемос хочу", "extra", KeyboardButtonColor.Negative);
+            return builder.Build();
+        }
+
+        
 
     }
 
