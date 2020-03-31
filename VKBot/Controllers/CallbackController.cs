@@ -60,14 +60,14 @@ namespace VKBot.Controllers
                             Thread.Sleep(5000);
                             
                             //keyBuilder.AddButton("Дед", "Доп инфа", KeyboardButtonColor.Primary, "text");
-                            MessageKeyboard keyboard = keyBuilder.Build();
+                            //MessageKeyboard keyboard = keyBuilder.Build();
                             
 
 
                             _vkApi.Messages.Send(new MessagesSendParams
                             {
                                 RandomId = new DateTime().Millisecond,
-                                Keyboard = keyboard,
+                                //Keyboard = keyboard,
                                 PeerId = msg.PeerId.Value,             
                                 Message = updates.Type+updates.Object
                             });
