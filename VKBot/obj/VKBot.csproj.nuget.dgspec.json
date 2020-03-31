@@ -58,6 +58,10 @@
             "VkNet": {
               "target": "Package",
               "version": "[1.50.0, )"
+            },
+            "VkNet.AudioBypassService": {
+              "target": "Package",
+              "version": "[1.5.3, )"
             }
           },
           "imports": [

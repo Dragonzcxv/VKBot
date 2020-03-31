@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="VkNet" Version="1.50.0" />
+    <PackageReference Include="VkNet.AudioBypassService" Version="1.5.3" />
   </ItemGroup>
 
   <ItemGroup>

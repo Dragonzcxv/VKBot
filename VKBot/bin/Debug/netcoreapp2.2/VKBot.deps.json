@@ -27,7 +27,8 @@
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
-          "VkNet": "1.50.0"
+          "VkNet": "1.50.0",
+          "VkNet.AudioBypassService": "1.5.3"
         },
         "runtime": {
           "VKBot.dll": {}
@@ -91,6 +92,20 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
+      "protobuf-net/2.4.4": {
+        "dependencies": {
+          "System.ServiceModel.Primitives": "4.5.3"
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/protobuf-net.dll": {
+            "assemblyVersion": "2.4.0.0",
+            "fileVersion": "2.4.4.9"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp2.1/protobuf-net.dll": {}
+        }
+      },
       "System.Net.Http/4.3.2": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0",
@@ -129,6 +144,28 @@
           "System.Runtime.Handles": "4.3.0"
         }
       },
+      "System.Private.ServiceModel/4.5.3": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.2.0",
+          "System.Reflection.DispatchProxy": "4.5.0",
+          "System.Security.Principal.Windows": "4.5.0"
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard2.0/System.Private.ServiceModel.dll": {
+            "rid": "unix",
+            "assetType": "runtime",
+            "assemblyVersion": "4.5.0.3",
+            "fileVersion": "4.6.26720.1"
+          },
+          "runtimes/win/lib/netstandard2.0/System.Private.ServiceModel.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.5.0.3",
+            "fileVersion": "4.6.26720.1"
+          }
+        }
+      },
+      "System.Reflection.DispatchProxy/4.5.0": {},
       "System.Runtime.CompilerServices.Unsafe/4.5.2": {
         "runtime": {
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
@@ -138,6 +175,25 @@
         },
         "compile": {
           "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
+        }
+      },
+      "System.ServiceModel.Primitives/4.5.3": {
+        "dependencies": {
+          "System.Private.ServiceModel": "4.5.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.ServiceModel.Primitives.dll": {
+            "assemblyVersion": "4.5.0.3",
+            "fileVersion": "4.6.26720.1"
+          },
+          "lib/netstandard2.0/System.ServiceModel.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.26720.1"
+          }
+        },
+        "compile": {
+          "ref/netstandard2.0/System.ServiceModel.Primitives.dll": {},
+          "ref/netstandard2.0/System.ServiceModel.dll": {}
         }
       },
       "System.Text.Encoding.CodePages/4.5.1": {
@@ -203,6 +259,21 @@
         },
         "compile": {
           "lib/netstandard2.0/VkNet.dll": {}
+        }
+      },
+      "VkNet.AudioBypassService/1.5.3": {
+        "dependencies": {
+          "VkNet": "1.50.0",
+          "protobuf-net": "2.4.4"
+        },
+        "runtime": {
+          "lib/netstandard2.0/VkNet.AudioBypassService.dll": {
+            "assemblyVersion": "1.5.3.0",
+            "fileVersion": "1.5.3.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/VkNet.AudioBypassService.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3376,6 +3447,13 @@
       "path": "newtonsoft.json/12.0.2",
       "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
     },
+    "protobuf-net/2.4.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EYZyqfSlroeRVC2cvyONwjFE6ji50d+0gsGXFha+Ij/ZzIBLFd4HJmlytlabSyeqJFz1RCIDvhIoe9+AEyx3bg==",
+      "path": "protobuf-net/2.4.4",
+      "hashPath": "protobuf-net.2.4.4.nupkg.sha512"
+    },
     "System.Net.Http/4.3.2": {
       "type": "package",
       "serviceable": true,
@@ -3390,12 +3468,33 @@
       "path": "system.net.primitives/4.3.0",
       "hashPath": "system.net.primitives.4.3.0.nupkg.sha512"
     },
+    "System.Private.ServiceModel/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ancrQgJagx+yC4SZbuE+eShiEAUIF0E1d21TRSoy1C/rTwafAVcBr/fKibkq5TQzyy9uNil2tx2/iaUxsy0S9g==",
+      "path": "system.private.servicemodel/4.5.3",
+      "hashPath": "system.private.servicemodel.4.5.3.nupkg.sha512"
+    },
+    "System.Reflection.DispatchProxy/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+UW1hq11TNSeb+16rIk8hRQ02o339NFyzMc4ma/FqmxBzM30l1c2IherBB4ld1MNcenS48fz8tbt50OW4rVULA==",
+      "path": "system.reflection.dispatchproxy/4.5.0",
+      "hashPath": "system.reflection.dispatchproxy.4.5.0.nupkg.sha512"
+    },
     "System.Runtime.CompilerServices.Unsafe/4.5.2": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-wprSFgext8cwqymChhrBLu62LMg/1u92bU+VOwyfBimSPVFXtsNqEWC92Pf9ofzJFlk4IHmJA75EDJn1b2goAQ==",
       "path": "system.runtime.compilerservices.unsafe/4.5.2",
       "hashPath": "system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+    },
+    "System.ServiceModel.Primitives/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Wc9Hgg4Cmqi416zvEgq2sW1YYCGuhwWzspDclJWlFZqY6EGhFUPZU+kVpl5z9kAgrSOQP7/Uiik+PtSQtmq+5A==",
+      "path": "system.servicemodel.primitives/4.5.3",
+      "hashPath": "system.servicemodel.primitives.4.5.3.nupkg.sha512"
     },
     "System.Text.Encoding.CodePages/4.5.1": {
       "type": "package",
@@ -3417,6 +3516,13 @@
       "sha512": "sha512-ju4B7Qm6lrJDUpqdIyYWmeQyn9LEh4Sr6OiGkhEP/Thl6UZu2W/5CEHrfZChIZIXqYwDGIBU7BYWfRA80zuuCQ==",
       "path": "vknet/1.50.0",
       "hashPath": "vknet.1.50.0.nupkg.sha512"
+    },
+    "VkNet.AudioBypassService/1.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ikkLEufppebReO0Fb84b9fU+5ESuc4DcNe2CFQdFU7xdzIcbbQnM00N4Je2Hq2uBHSbV5BD4jPT/aq1s5sjfHw==",
+      "path": "vknet.audiobypassservice/1.5.3",
+      "hashPath": "vknet.audiobypassservice.1.5.3.nupkg.sha512"
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",
