@@ -44,14 +44,14 @@ namespace VKBot.Controllers
                     {
                         // Десериализаци
                         var msg = Message.FromJson(new VkResponse(updates.Object));
-                        var uploadServer = _vkApi.Docs.GetMessagesUploadServer(msg.PeerId.Value, DocMessageType.AudioMessage);
-                        var wc = new WebClient();
-                        var doc = Encoding.UTF8.GetString(wc.UploadFile(uploadServer.UploadUrl, @"D:\Downloads\Low Roar\2014 – Hávallagata 30 – EP\2.mp3"));
+                        //var uploadServer = _vkApi.Docs.GetMessagesUploadServer(msg.PeerId.Value, DocMessageType.AudioMessage);
+                        //var wc = new WebClient();
+                        //var doc = Encoding.UTF8.GetString(wc.UploadFile(uploadServer.UploadUrl, @"D:\Downloads\Low Roar\2014 – Hávallagata 30 – EP\2.mp3"));
                         //var voiceMes = _vkApi.Docs.Save(doc, "mes", "test")[0].Instance;
-                        var attac = new List<MediaAttachment>
-                        {
-                            _vkApi.Docs.Save(doc, "mes", "test")[0].Instance
-                        };
+                        //var attac = new List<MediaAttachment>
+                        //{
+                        //    _vkApi.Docs.Save(doc, "mes", "test")[0].Instance
+                        //};
                         
 
                         if (msg.Text.ToLower() == "да")
@@ -76,7 +76,7 @@ namespace VKBot.Controllers
                         break;
                     }
             }
-            return Ok("ok");
+            return Ok(updates.Type);
         }
 
         
