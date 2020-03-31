@@ -7,12 +7,8 @@ using VkNet.Model;
 using VkNet.Model.RequestParams;
 using VkNet.Utils;
 using System.Threading;
-using System.Text;
-using System.Net;
-using System.Collections.Generic;
-using VkNet.Model.Attachments;
 using VkNet.Model.Keyboard;
-using System.Collections;
+
 
 namespace VKBot.Controllers
 {
@@ -26,7 +22,10 @@ namespace VKBot.Controllers
         private readonly IConfiguration _configuration;
 
         private readonly IVkApi _vkApi;
-        
+
+        private KeyboardBuilder keyBuilder;
+
+
         public CallbackController(IVkApi vkApi,IConfiguration configuration)
         {
             _vkApi = vkApi;
@@ -42,7 +41,7 @@ namespace VKBot.Controllers
                     return Ok(_configuration["Config:Confirmation"]);
                 case "message_new":
                     {
-                        // Десериализаци
+                        
                         var msg = Message.FromJson(new VkResponse(updates.Object));
                         //var uploadServer = _vkApi.Docs.GetMessagesUploadServer(msg.PeerId.Value, DocMessageType.AudioMessage);
                         //var wc = new WebClient();
@@ -59,8 +58,8 @@ namespace VKBot.Controllers
                             
                             _vkApi.Messages.SetActivity("193439141", MessageActivityType.Typing, msg.PeerId.Value);
                             Thread.Sleep(5000);
-                            KeyboardBuilder keyBuilder = new KeyboardBuilder();
-                            keyBuilder.AddButton("Дед", "Доп инфа", KeyboardButtonColor.Primary, "text");
+                            
+                            //keyBuilder.AddButton("Дед", "Доп инфа", KeyboardButtonColor.Primary, "text");
                             MessageKeyboard keyboard = keyBuilder.Build();
                             
 
@@ -76,7 +75,7 @@ namespace VKBot.Controllers
                         break;
                     }
             }
-            return Ok(updates.Type);
+            return Ok("ok");
         }
 
         
