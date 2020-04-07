@@ -72,6 +72,7 @@ namespace VKBot.Controllers
 
         private string WeatherFunction(double lat, double lon, string cityName)
         {
+
             string descriptionWeather;
             int tempWeather;
             int tempFeelsWeather;;
