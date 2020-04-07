@@ -52,7 +52,7 @@ namespace VKBot.Controllers
                         _vkApi.Messages.Send(new MessagesSendParams
                         {
                             RandomId = new DateTime().Millisecond,
-                            PeerId = msg.UserId.Value,
+                            PeerId = msg.PeerId.Value,
                             Message = "Ты посмотри кто к нам колёса катит",
                             Keyboard = keyboard
                         });
@@ -62,7 +62,7 @@ namespace VKBot.Controllers
                     {
                         if (msg.Geo != null)
                         {
-                            SendTextMessage(msg.UserId.Value, WeatherFunction(msg.Geo.Coordinates.Latitude,msg.Geo.Coordinates.Longitude));
+                            SendTextMessage(msg.PeerId.Value, WeatherFunction(msg.Geo.Coordinates.Latitude,msg.Geo.Coordinates.Longitude));
                         }
                         break;
                     }
