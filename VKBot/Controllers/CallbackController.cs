@@ -81,7 +81,6 @@ namespace VKBot.Controllers
             {
                 var JData = client.DownloadString(adress);
                 var data = JObject.Parse(JData);
-                cityName = (string)data["name"];
                 descriptionWeather = (string)data["weather"][0]["description"];
                 tempWeather = (int)data["main"]["temp"];
                 tempFeelsWeather = (int)data["main"]["feels_like"];
