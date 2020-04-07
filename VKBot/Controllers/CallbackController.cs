@@ -52,7 +52,7 @@ namespace VKBot.Controllers
                         _vkApi.Messages.Send(new MessagesSendParams
                         {
                             RandomId = new DateTime().Millisecond,
-                            PeerId = msg.PeerId.Value,
+                            PeerId = msg.UserId.Value,
                             Message = "Ты посмотри кто к нам колёса катит",
                             Keyboard = keyboard
                         });
