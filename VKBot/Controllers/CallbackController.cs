@@ -62,7 +62,7 @@ namespace VKBot.Controllers
                     {
                         if (msg.Geo != null)
                         {
-                            SendTextMessage(msg.PeerId.Value, WeatherFunction(msg.Geo.Coordinates.Latitude,msg.Geo.Coordinates.Longitude));
+                            SendTextMessage(msg.PeerId.Value, WeatherFunction(msg.Geo.Coordinates.Latitude,msg.Geo.Coordinates.Longitude, msg.Geo.Place.City));
                         }
                         break;
                     }
@@ -70,9 +70,8 @@ namespace VKBot.Controllers
             return Ok("ok");
         }
 
-        private string WeatherFunction(double lat, double lon)
+        private string WeatherFunction(double lat, double lon, string cityName)
         {
-            string cityName;
             string descriptionWeather;
             int tempWeather;
             int tempFeelsWeather;;
