@@ -12,6 +12,7 @@ using VkNet.Model.Attachments;
 using System.Net;
 using System.Text;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace VKBot.Controllers
 {
@@ -39,6 +40,7 @@ namespace VKBot.Controllers
         public IActionResult Callback([FromBody]Updates updates)
         {
             var msg = Message.FromJson(new VkResponse(updates.Object));
+      
             switch (updates.Type)
             {
                 case "confirmation":
@@ -56,8 +58,36 @@ namespace VKBot.Controllers
                         });
                         break;
                     }
+                case "message_new":
+                    {
+                        if (msg.Geo != null)
+                        {
+                            SendTextMessage(msg.UserId.Value, WeatherFunction(msg.Geo.Coordinates.Latitude,msg.Geo.Coordinates.Longitude));
+                        }
+                        break;
+                    }
             }
             return Ok("ok");
+        }
+
+        private string WeatherFunction(double lat, double lon)
+        {
+            string cityName;
+            string descriptionWeather;
+            int tempWeather;
+            int tempFeelsWeather;;
+            string adress = $"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&lang=ru&appid={_configuration["Config:WetherAPI"]}";
+            using (WebClient client = new WebClient())
+            {
+                var JData = client.DownloadString(adress);
+                var data = JObject.Parse(JData);
+                cityName = (string)data["name"];
+                descriptionWeather = (string)data["weather"][0]["description"];
+                tempWeather = (int)data["main"]["temp"];
+                tempFeelsWeather = (int)data["main"]["feels_like"];
+                Console.WriteLine($"В общем в городе {cityName} сейчас {tempWeather} по цельсию, но чувствовать ты будешь {tempFeelsWeather}. В целом, в твоей дыре {descriptionWeather}. Пис тебе!");
+            }
+            return $"В общем в городе {cityName} сейчас {tempWeather} по цельсию, но чувствовать ты будешь {tempFeelsWeather}. В целом, в твоей дыре {descriptionWeather}. Пис тебе!";
         }
 
         private void SetActivityMessages(string groupId, long peerId, int second, bool isVoice = false)
@@ -69,19 +99,19 @@ namespace VKBot.Controllers
             Thread.Sleep(second * 1000);
         }
 
-        private void SendTextMessage(long? peerId, string message)
+        private void SendTextMessage(long? userId, string message)
         {
             _vkApi.Messages.Send(new MessagesSendParams
             {
                 RandomId = new DateTime().Millisecond,
-                PeerId = peerId,
+                PeerId = userId,
                 Message = message
             });
         }
 
-        private void SendVoiceMessage(long? peerId, string pathAudioMessage)
+        private void SendVoiceMessage(long? userId, string pathAudioMessage)
         {
-            uploadServer = _vkApi.Docs.GetMessagesUploadServer(peerId, DocMessageType.AudioMessage);
+            uploadServer = _vkApi.Docs.GetMessagesUploadServer(userId, DocMessageType.AudioMessage);
             var wc = new WebClient();
             var doc = Encoding.UTF8.GetString(wc.UploadFile(uploadServer.UploadUrl, pathAudioMessage));
 
@@ -93,20 +123,31 @@ namespace VKBot.Controllers
             _vkApi.Messages.Send(new MessagesSendParams
             {
                 RandomId = new DateTime().Millisecond,
-                PeerId = peerId,
+                PeerId = userId,
                 Attachments = audioMessage
             });
+           // http://api.openweathermap.org/data/2.5/weather?lat=54.1960900&lon=37.6182200&units=metric&lang=ru&appid=0e8751055ef3bd151909c6423d520232
 
         }
 
         private MessageKeyboard KeyboardBuild()
         {
-            KeyboardBuilder builder = new KeyboardBuilder();
-            builder.Clear();
-            builder.AddButton("Быкman, какая погода на сегодня?", "extra", KeyboardButtonColor.Primary);
-            builder.AddButton("Быкman, нужно трек качнуть из моих аудио", "extra", KeyboardButtonColor.Positive);
-            builder.AddButton("Быкman, мемос хочу", "extra", KeyboardButtonColor.Negative);
-            return builder.Build();
+            List<List<MessageKeyboardButton>> buttons = new List<List<MessageKeyboardButton>>
+            {
+                new List<MessageKeyboardButton>
+                {
+                    new MessageKeyboardButton
+                    {
+                        Action = new MessageKeyboardButtonAction
+                        {
+                            Type = KeyboardButtonActionType.Location
+                        }
+                    }
+                }
+            };
+            return new MessageKeyboard { Buttons = buttons };
+
+
         }
 
         

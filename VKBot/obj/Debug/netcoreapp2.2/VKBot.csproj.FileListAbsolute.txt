@@ -14,3 +14,19 @@ C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\
 C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.pdb
 C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.dll
 C:\Users\it003.FIRST\Desktop\Проекты\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.pdb
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\appsettings.Development.json
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\appsettings.json
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.deps.json
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.runtimeconfig.json
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.runtimeconfig.dev.json
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.dll
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\bin\Debug\netcoreapp2.2\VKBot.pdb
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.csprojAssemblyReference.cache
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.RazorAssemblyInfo.cache
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.RazorAssemblyInfo.cs
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.AssemblyInfoInputs.cache
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.AssemblyInfo.cs
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.RazorTargetAssemblyInfo.cache
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.dll
+D:\MyFuckingProject\ASP.NET Core\VKBot\VKBot\obj\Debug\netcoreapp2.2\VKBot.pdb
