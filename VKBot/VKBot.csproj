@@ -12,8 +12,4 @@
     <PackageReference Include="VkNet.AudioBypassService" Version="1.5.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

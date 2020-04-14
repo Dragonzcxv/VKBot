@@ -9,10 +9,8 @@ using VkNet.Utils;
 using System.Threading;
 using VkNet.Model.Keyboard;
 using VkNet.Model.Attachments;
-using System.Net;
-using System.Text;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+using VKBot.Models;
 
 namespace VKBot.Controllers
 {
@@ -27,14 +25,21 @@ namespace VKBot.Controllers
 
         private readonly IVkApi _vkApi;
 
-        private MessageKeyboard keyboard;
         private UploadServerInfo uploadServer;
+
+
+
+
 
         public CallbackController(IVkApi vkApi,IConfiguration configuration)
         {
             _vkApi = vkApi;
             _configuration = configuration;
         }
+
+
+
+
 
         [HttpPost]
         public IActionResult Callback([FromBody]Updates updates)
@@ -47,22 +52,23 @@ namespace VKBot.Controllers
                     return Ok(_configuration["Config:Confirmation"]);
                 case "group_join":
                     {
-                        //SendTextMessage(msg.PeerId.Value, "случился бан");
-                        keyboard = KeyboardBuild();
                         _vkApi.Messages.Send(new MessagesSendParams
                         {
                             RandomId = new DateTime().Millisecond,
                             PeerId = msg.UserId.Value,
-                            Message = "Ты посмотри кто к нам колёса катит",
-                            Keyboard = keyboard
-                        });
+                            Message = "Ты посмотри кто к нам колёса катит/nЯ могу рассказать, какая погода сегодня, ты только намекни, местоположением например",
+                            Keyboard = KeyboardBuild()
+                    });
                         break;
                     }
                 case "message_new":
                     {
                         if (msg.Geo != null)
                         {
-                            SendTextMessage(msg.PeerId.Value, WeatherFunction(msg.Geo.Coordinates.Latitude,msg.Geo.Coordinates.Longitude, msg.Geo.Place.City));
+                            uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
+                            WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City,uploadServer);
+                            SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
+                            SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse)); 
                         }
                         break;
                     }
@@ -70,25 +76,16 @@ namespace VKBot.Controllers
             return Ok("ok");
         }
 
-        private string WeatherFunction(double lat, double lon, string cityName)
-        {
+        
 
-            string descriptionWeather;
-            int tempWeather;
-            int tempFeelsWeather;;
-            string adress = $"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&lang=ru&appid={_configuration["Config:WetherAPI"]}";
-            using (WebClient client = new WebClient())
-            {
-                var JData = client.DownloadString(adress);
-                var data = JObject.Parse(JData);
-                descriptionWeather = (string)data["weather"][0]["description"];
-                tempWeather = (int)data["main"]["temp"];
-                tempFeelsWeather = (int)data["main"]["feels_like"];
-                Console.WriteLine($"В общем в городе {cityName} сейчас {tempWeather} по цельсию, но чувствовать ты будешь {tempFeelsWeather}. В целом, в твоей дыре {descriptionWeather}. Пис тебе!");
-            }
-            return $"В общем в городе {cityName} сейчас {tempWeather} по цельсию, но чувствовать ты будешь {tempFeelsWeather}. В целом, в твоей дыре {descriptionWeather}. Пис тебе!";
-        }
-
+        
+        /// <summary>
+        /// Состояние бота "набирает текст\записывает аудио"
+        /// </summary>
+        /// <param name="groupId">Id бота</param>
+        /// <param name="peerId">Id пользователя, с кем происходит диалог</param>
+        /// <param name="second">Продолжительность в секундах</param>
+        /// <param name="isVoice">Голосовое сообщение да\нет</param>
         private void SetActivityMessages(string groupId, long peerId, int second, bool isVoice = false)
         {
             if (isVoice)
@@ -98,36 +95,24 @@ namespace VKBot.Controllers
             Thread.Sleep(second * 1000);
         }
 
-        private void SendTextMessage(long? userId, string message)
+
+
+
+
+        private void SendWeatherMessage(long? userId, string message, IReadOnlyCollection<Photo> photos)
         {
             _vkApi.Messages.Send(new MessagesSendParams
             {
                 RandomId = new DateTime().Millisecond,
                 PeerId = userId,
-                Message = message
+                Message = message,
+                Attachments = photos
             });
         }
 
-        private void SendVoiceMessage(long? userId, string pathAudioMessage)
-        {
-            uploadServer = _vkApi.Docs.GetMessagesUploadServer(userId, DocMessageType.AudioMessage);
-            var wc = new WebClient();
-            var doc = Encoding.UTF8.GetString(wc.UploadFile(uploadServer.UploadUrl, pathAudioMessage));
 
-            var audioMessage = new List<MediaAttachment>
-            {
-                _vkApi.Docs.Save(doc, "message", "test")[0].Instance
-            };
 
-            _vkApi.Messages.Send(new MessagesSendParams
-            {
-                RandomId = new DateTime().Millisecond,
-                PeerId = userId,
-                Attachments = audioMessage
-            });
-           // http://api.openweathermap.org/data/2.5/weather?lat=54.1960900&lon=37.6182200&units=metric&lang=ru&appid=0e8751055ef3bd151909c6423d520232
 
-        }
 
         private MessageKeyboard KeyboardBuild()
         {
@@ -148,9 +133,6 @@ namespace VKBot.Controllers
 
 
         }
-
-        
-
     }
 
     
