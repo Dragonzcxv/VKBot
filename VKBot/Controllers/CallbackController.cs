@@ -65,12 +65,19 @@ namespace VKBot.Controllers
                     {
                         if (msg.Geo != null)
                         {
-                            uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
-                            WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City,uploadServer);
-                            SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
-                            SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse)); 
+                            //uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
+                            // WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City,uploadServer);
+                            //SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
+                            //SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse)); 
+                            _vkApi.Messages.Send(new MessagesSendParams
+                            {
+                                RandomId = new DateTime().Millisecond,
+                                PeerId = msg.PeerId.Value,
+                                Message = "ыы"
+                                
+                            });
                         }
-                        return Ok("ok");
+                        break;
                     }
             }
             return Ok("ok");
