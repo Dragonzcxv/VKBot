@@ -11,6 +11,7 @@ using VkNet.Model.Keyboard;
 using VkNet.Model.Attachments;
 using System.Collections.Generic;
 using VKBot.Models;
+using System.Threading.Tasks;
 
 namespace VKBot.Controllers
 {
@@ -44,42 +45,44 @@ namespace VKBot.Controllers
         [HttpPost]
         public IActionResult Callback([FromBody]Updates updates)
         {
-            
-      
-            switch (updates.Type)
+            if(updates.Type == "confirmation")
+                return Ok(_configuration["Config:Confirmation"]);
+
+            var outer = Task.Factory.StartNew(() =>
             {
-                case "confirmation":
-                    return Ok(_configuration["Config:Confirmation"]);
-                case "group_join":
-                    {
-                        var msg = Message.FromJson(new VkResponse(updates.Object));
-                        _vkApi.Messages.Send(new MessagesSendParams
+                switch (updates.Type)
+                {
+                    case "group_join":
                         {
-                            RandomId = new DateTime().Millisecond,
-                            PeerId = msg.UserId.Value,
-                            Message = "Ты посмотри кто к нам колёса катит\nЯ могу рассказать, какая погода сегодня, ты только намекни, местоположением например",
-                            Keyboard = KeyboardBuild()
-                    });
-                        break;
-                    }
-                case "message_new":
-                    {
-                        var msg = Message.FromJson(new VkResponse(updates.Object));
-                        if (msg.Geo != null)
-                        {
-                            uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
-                            WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City,uploadServer);
-                            SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
-                            SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse)); 
+                            var msg = Message.FromJson(new VkResponse(updates.Object));
+                            _vkApi.Messages.Send(new MessagesSendParams
+                            {
+                                RandomId = new DateTime().Millisecond,
+                                PeerId = msg.UserId.Value,
+                                Message = "Ты посмотри кто к нам колёса катит\nЯ могу рассказать, какая погода сегодня, ты только намекни, местоположением например",
+                                Keyboard = KeyboardBuild()
+                            });
+                            break;
                         }
-                        break;
-                    }
-            }
+                    case "message_new":
+                        {
+                            var msg = Message.FromJson(new VkResponse(updates.Object));
+                            if (msg.Geo != null)
+                            {
+                                uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
+                                WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City, uploadServer);
+                                SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
+                                SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse));
+                            }
+                            break;
+                        }
+                }
+            });
             return Ok("ok");
         }
 
         
-
+        
         
         /// <summary>
         /// Состояние бота "набирает текст\записывает аудио"
