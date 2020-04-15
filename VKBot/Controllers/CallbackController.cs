@@ -78,6 +78,7 @@ namespace VKBot.Controllers
                         }
                 }
             });
+
             return Ok("ok");
         }
 
