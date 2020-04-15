@@ -44,7 +44,7 @@ namespace VKBot.Controllers
         [HttpPost]
         public IActionResult Callback([FromBody]Updates updates)
         {
-            var msg = Message.FromJson(new VkResponse(updates.Object));
+            
       
             switch (updates.Type)
             {
@@ -52,6 +52,7 @@ namespace VKBot.Controllers
                     return Ok(_configuration["Config:Confirmation"]);
                 case "group_join":
                     {
+                        var msg = Message.FromJson(new VkResponse(updates.Object));
                         _vkApi.Messages.Send(new MessagesSendParams
                         {
                             RandomId = new DateTime().Millisecond,
@@ -63,19 +64,13 @@ namespace VKBot.Controllers
                     }
                 case "message_new":
                     {
+                        var msg = Message.FromJson(new VkResponse(updates.Object));
                         if (msg.Geo != null)
                         {
-                            //uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
-                            // WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City,uploadServer);
-                            //SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
-                            //SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse)); 
-                            _vkApi.Messages.Send(new MessagesSendParams
-                            {
-                                RandomId = new DateTime().Millisecond,
-                                PeerId = msg.PeerId.Value,
-                                Message = "ыы"
-                                
-                            });
+                            uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
+                            WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City,uploadServer);
+                            SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
+                            SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse)); 
                         }
                         break;
                     }
