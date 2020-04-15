@@ -56,7 +56,7 @@ namespace VKBot.Controllers
                         {
                             RandomId = new DateTime().Millisecond,
                             PeerId = msg.UserId.Value,
-                            Message = "Ты посмотри кто к нам колёса катит/nЯ могу рассказать, какая погода сегодня, ты только намекни, местоположением например",
+                            Message = "Ты посмотри кто к нам колёса катит\nЯ могу рассказать, какая погода сегодня, ты только намекни, местоположением например",
                             Keyboard = KeyboardBuild()
                     });
                         break;
@@ -70,7 +70,7 @@ namespace VKBot.Controllers
                             SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
                             SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse)); 
                         }
-                        break;
+                        return Ok("ok");
                     }
             }
             return Ok("ok");
