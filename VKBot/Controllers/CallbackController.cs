@@ -48,13 +48,13 @@ namespace VKBot.Controllers
             if(updates.Type == "confirmation")
                 return Ok(_configuration["Config:Confirmation"]);
 
-            var outer = Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(() =>
             {
+                var msg = Message.FromJson(new VkResponse(updates.Object));
                 switch (updates.Type)
                 {
                     case "group_join":
                         {
-                            var msg = Message.FromJson(new VkResponse(updates.Object));
                             _vkApi.Messages.Send(new MessagesSendParams
                             {
                                 RandomId = new DateTime().Millisecond,
@@ -66,7 +66,6 @@ namespace VKBot.Controllers
                         }
                     case "message_new":
                         {
-                            var msg = Message.FromJson(new VkResponse(updates.Object));
                             if (msg.Geo != null)
                             {
                                 uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
@@ -78,7 +77,6 @@ namespace VKBot.Controllers
                         }
                 }
             });
-
             return Ok("ok");
         }
 
