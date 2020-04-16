@@ -71,8 +71,13 @@ namespace VKBot.Controllers
                                 uploadServer = _vkApi.Photo.GetMessagesUploadServer(msg.PeerId.Value);
                                 WeatherAPI.UpdateWeather(msg.Geo.Coordinates.Latitude, msg.Geo.Coordinates.Longitude, msg.Geo.Place.City, uploadServer);
                                 SetActivityMessages(updates.GroupId.ToString(), msg.PeerId.Value, 5);
-                                SendWeatherMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse));
+                                SendTextMessage(msg.PeerId.Value, WeatherAPI.GetTextWeather(), _vkApi.Photo.SaveMessagesPhoto(WeatherAPI.iconResponse));
                             }
+                            else
+                                SendTextMessage(msg.PeerId.Value, "Братишка мой альтернативно одарённый...\n" +
+                                                                  "Я погодный бот, я могу только сказать погоду и посадить на нож\n" +
+                                                                  "Лучше бы тебе отправить поскорее координаты, не то выбор будет не велик");
+
                             break;
                         }
                 }
@@ -103,7 +108,7 @@ namespace VKBot.Controllers
 
 
 
-        private void SendWeatherMessage(long? userId, string message, IReadOnlyCollection<Photo> photos)
+        private void SendTextMessage(long? userId, string message, IReadOnlyCollection<Photo> photos = null)
         {
             _vkApi.Messages.Send(new MessagesSendParams
             {
